@@ -1,0 +1,20 @@
+{
+    "name": "drunomics/sitemap-cache-warmer",
+    "description": "Warms caches based upon sitemap.xml.",
+    "autoload": {
+        "psr-4": {
+            "drunomics\\SitemapCacheWarmer\\": "src"
+        }
+    },
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "drunomics GmbH",
+            "email": "hello@drunomics.com"
+        }
+    ],
+    "require": {
+        "vipnytt/sitemapparser": "^1.0",
+        "symfony/stopwatch": "^4.1"
+    }
+}

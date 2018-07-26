@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Default config that reads environment variables.
+ *
+ * For customizing the config, copy to config.inc.php and edit the file.
+ */
+
+$config = [
+  'base_url' => isset($argv[1]) ? $argv[1] : getenv('PHAPP_BASE_URL'),
+  'guzzle' => [
+    // GuzzleHttp request options
+    // http://docs.guzzlephp.org/en/latest/request-options.html
+  ],
+];
+
+if (($user = getenv('HTTP_AUTH_USER')) && ($pass = getenv('HTTP_AUTH_PASSWORD'))) {
+  echo "Using HTTP authentication $user:$pass \n";
+  $config['guzzle']['auth'] = [$user, $pass];
+}
