@@ -51,6 +51,7 @@ class Cachewarmer {
 
     $stopwatch->start('warm');
     $counters = [];
+    $times = [];
     foreach ($urls as $url) {
       $stopwatch->start('request');
       $response = $client->get($url, ['http_errors' => FALSE] + $this->config['guzzle']);
@@ -60,14 +61,16 @@ class Cachewarmer {
       $periods = $event->getPeriods();
       $time = number_format(end($periods)->getDuration(), 0);
       echo "[$status] {$time}ms - $url \n";
-
+      $times[] = $time;
       // Count status codes.
       $group = (int) $status / 100;
       $counters[$group] = (isset($counters[$group]) ? $counters[$group] : 0) + 1;
     }
     $event = $stopwatch->stop('warm');
     $time = number_format($event->getDuration() / 1000, 2);
-    echo "Fetched URLs in {$time}s of which \n";
+    $total_count = count($times);
+    $average_time = round(array_sum($times) / $total_count, 2);
+    echo "Fetched $total_count URLs in {$time}s, average: $average_time ms\n";
     ksort($counters);
     foreach ($counters as $group => $count) {
       echo "$count were HTTP " . $group . "xx responses\n";
@@ -97,7 +100,6 @@ class Cachewarmer {
       if (!$parser->getQueue()) {
         $parser->parseRecursive($base_url . '/sitemap.xml');
       }
-
       $urls = array_keys($parser->getURLs());
 
       if (!$urls) {

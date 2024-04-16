@@ -16,7 +16,7 @@ HTTP status code information.
 Usage may vary based upon your configuration. With the default configuration
 the following usage is supported:
 
-    php run.php https://example.com
+    php run.php https://drunomics.com
 
 Alternatively the URL may be provided via the `PHAPP_BASE_URL` environment 
 variable.
